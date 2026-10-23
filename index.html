@@ -286,7 +286,7 @@ function regions(path){
   const cc=CORN.map(c=>({x:c[0],y:c[1],d:((tn-c[2])%T+T)%T})).filter(c=>c.d<((tn-t0)%T+T)%T).sort((a,b)=>a.d-b.d);
   return[path.concat(cw),path.concat(cc)];
 }
-/* rem = نتيجة جاهزة من اللاعب الآخر {l,rr}: نعيد رسم القص فقط ونعتمد أرقامه */
+
 function doCut(P,rem){
   const a=P[0],ka=far(a,P.slice(1)),z=P[P.length-1],kz=far(z,P.slice().reverse().slice(1));
   const da=dirTo(a,ka),dz=dirTo(z,kz);
@@ -324,7 +324,6 @@ function advance(){
 /* ---------- الأونلاين (PeerJS) ---------- */
 const st=t=>$("st").textContent=t;
 const NOPEER="⚠️ تعذّر تحميل مكتبة الأونلاين. تحقق من الاتصال وحاول مرة ثانية، أو العبا على نفس الجهاز";
-/* تحميل PeerJS عند الحاجة فقط، حتى لا تتأخر الصفحة لو الـ CDN بطيء أو محجوب */
 const PEER_SRCS=["https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js","https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"];
 function loadScript(u){return new Promise(res=>{const s=document.createElement("script");const t=setTimeout(()=>{s.remove();res(false)},8000);s.onload=()=>{clearTimeout(t);res(true)};s.onerror=()=>{clearTimeout(t);s.remove();res(false)};s.src=u;document.head.appendChild(s)})}
 async function loadPeer(){if(typeof Peer!=="undefined")return true;for(const u of PEER_SRCS){if(await loadScript(u)&&typeof Peer!=="undefined")return true}return false}
